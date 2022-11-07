@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <label for="input_nome_astronalta">Digite o nome do astronalta:</label>
+    <input type="text" id="input_nome_astronalta">
+    <br><br>
+    <label for="input_qtd_dias">Digite a quantidade de dias:</label>
+    <input type="text" id="input_qtd_dias">
+    <br><br>
+    <label for="input_qtd_horas">Digite a quantidade de horas:</label>
+    <input type="text" id="input_qtd_horas">
+    <br><br>
+    <label for="input_qtd_minutos">Digite a quantidade de minutos:</label>
+    <input type="text" id="input_qtd_minutos">
+    <br><br>
+    <button onclick="cadastrar_viagem()">Registrar viagem</button>
+    <button onclick="mostrar_relatorio()">Relatório de viagens</button>
+    <div id='resultado'></div>
+
+    
+</body>
+
+</html>
+
+<script>
+    var lista_nome_astronautas = []
+    var lista_dias = []
+    var lista_horas = []
+    var lista_minutos = []
+    var qtd_viagens = 0;
+
+    function cadastrar_viagem() {
+        var nome_astronauta = input_nome_astronalta.value;
+        var qtd_dias = Number(input_qtd_dias.value);
+        var qtd_horas = Number(input_qtd_horas.value)
+        var qtd_minutos = Number(input_qtd_minutos.value)
+
+        if (qtd_dias == 0 && qtd_horas == 0 && qtd_minutos == 0) {
+            alert("informe um tempo de viagem válido!")
+        }
+        else {
+            lista_nome_astronautas.push(nome_astronauta);
+            lista_dias.push(qtd_dias);
+            lista_horas.push(qtd_horas);
+            lista_minutos.push(qtd_minutos);
+            qtd_viagens += 1;
+        }
+
+
+    }
+
+    function mostrar_relatorio() {
+        var nome_astronauta = input_nome_astronalta.value;
+        var qtd_dias = Number(input_qtd_dias.value);
+        var qtd_horas = Number(input_qtd_horas.value)
+        var qtd_minutos = Number(input_qtd_minutos.value)
+
+        resultado.innerHTML = `Foram registradas <b>${lista_dias.length}</b> viagens, detalhadas a seguir:
+`;
+
+        for (contador = 0; contador < lista_nome_astronautas.length; contador++) {
+
+            var horas_minutos = lista_horas[contador] * 60;
+            var dias_minutos = lista_dias[contador] * 1440;
+            var soma_minutos = lista_minutos[contador] + horas_minutos + dias_minutos;
+
+            var conversao_anos = soma_minutos / 525600;
+            var conversao_tempo_terra = conversao_anos * 49;
+
+
+            if (conversao_tempo_terra <= 13) {
+                
+                resultado.innerHTML += `
+                Viagem <b>${contador + 1}</b>
+                <b>${nome_astronauta[contador]}</b> Ficou fora por pelo menos <b>${conversao_tempo_terra}</b> anos no tempo da Terra a crianca que nasceu quando ele saiu provavelmente está assim: <br>
+                
+                <img src="img/13anos.png" alt="">`
+            }
+            else if (conversao_tempo_terra <= 30) {
+                resultado.innerHTML += `
+                Viagem <b>${contador + 1}</b>
+                <b>${nome_astronauta[contador]}</b> Ficou fora por pelo menos <b>${conversao_tempo_terra}</b> anos no tempo da Terra a crianca que nasceu quando ele saiu provavelmente está assim: <br>
+                
+                <img src="img/30anos.png" alt="">`
+
+            }
+            else if (conversao_tempo_terra <= 65) {
+                resultado.innerHTML += `
+                Viagem <b>${contador + 1}</b>
+                <b>${nome_astronauta[contador]}</b> Ficou fora por pelo menos <b>${conversao_tempo_terra}</b> anos no tempo da Terra a crianca que nasceu quando ele saiu provavelmente está assim: <br>
+                
+                <img src="img/65anos.png" alt="">`
+            }
+            else if (conversao_tempo_terra <= 100) {
+                resultado.innerHTML += `
+                Viagem <b>${contador + 1}</b>
+                <b>${nome_astronauta[contador]}</b> Ficou fora por pelo menos <b>${conversao_tempo_terra}</b> anos no tempo da Terra a crianca que nasceu quando ele saiu provavelmente está assim: <br>
+                
+                <img src="img/100anos.png" alt="">`
+            }
+            else if(conversao_tempo_terra >100) {
+                resultado.innerHTML += `
+                Viagem <b>${contador + 1}</b>
+                <b>${nome_astronauta[contador]}</b> Ficou fora por pelo menos <b>${conversao_tempo_terra}</b> anos no tempo da Terra a crianca que nasceu quando ele saiu provavelmente está assim: <br>
+                
+                <img src="img/maisde100anos.png" alt="">`
+            }
+
+        }
+    }
+</script>
+
+<!-- a.1) Nome do astronauta;
+a.2) Quantidade de dias;
+a.3) Quantidade de horas;
+a.4) Quantidade de minutos; -->
+
+<!-- - se o astronauta passou só 3 minutos lá, então cadastra 0 dias, 0 horas e 3 minutos.
+- se o astronauta passou só 2 dias lá, então cadastra 2 dias, 0 horas e 0 minutos.
+- se o astronauta passou só 5 dias e meio lá, então cadastra 5 dias, 12 horas e 0 minutos.  -->
